@@ -3,11 +3,13 @@ import { Login } from './accountComponents/Login';
 import { useAuth } from '../../utils/AuthContext';
 import Profile from './accountComponents/Profile';
 import AddBarber from './accountComponents/AddBarber';
+import AddService from './accountComponents/AddService';
 
 const Settings = () => {
     const [loginClick, setLoginClick] = useState(false);
     const [profileClick, setProfileClick] = useState(false);
     const [addBarberClick, setAddBarberClick] = useState(false);
+    const [addServiceClick, setAddServiceClick] = useState(false);
 
     const { user, logoutUser } = useAuth();
 
@@ -30,10 +32,18 @@ const Settings = () => {
     const handleProfileClick = () => {
         setProfileClick(true);
         setAddBarberClick(false);
+        setAddServiceClick(false);
     }
 
     const handleAddBarbersClick = () => {
         setAddBarberClick(true);
+        setProfileClick(false);
+        setAddServiceClick(false);
+    }
+
+    const handleAddServiceClick = () => {
+        setAddServiceClick(true);
+        setAddBarberClick(false);
         setProfileClick(false);
     }
 
@@ -46,7 +56,7 @@ const Settings = () => {
                         <div className='flex flex-col col-span-3 shadow-md rounded-md p-4 space-y-2 mt-10 max-h-72'>
                             <p className='hover:bg-gray-200 hover:cursor-pointer p-2 rounded-md hover:border-l-4 border-black' onClick={handleProfileClick}>Profile</p>
                             {user.loggedIn && user.role === "Admin" && <p className='hover:bg-gray-200 hover:cursor-pointer p-2 rounded-md hover:border-l-4 border-black' onClick={handleAddBarbersClick}>Add Barbers</p>}
-                            <p className='hover:bg-gray-200 hover:cursor-pointer p-2 rounded-md hover:border-l-4 border-black'>Menu option 4</p>
+                            <p className='hover:bg-gray-200 hover:cursor-pointer p-2 rounded-md hover:border-l-4 border-black' onClick={handleAddServiceClick}>Add Service</p>
                             <p className='hover:bg-gray-200 hover:cursor-pointer p-2 rounded-md hover:border-l-4 border-black' onClick={handleLogoutClick}>Logout</p>
                         </div>
                     ) : (
@@ -59,6 +69,7 @@ const Settings = () => {
                     {loginClick && <Login />}
                     {profileClick && <Profile />}
                     {addBarberClick && <AddBarber />}
+                    {addServiceClick && <AddService />}
                 </div>
                 {user.loggedIn && <button className='position relative col-span-1 h-10 bg-slate-300 rounded-md px-3 py-2' style={{minWidth: "75px"}} onClick={handleLogoutClick}>Logout</button>}
             </div>
