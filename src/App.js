@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom"
 import HomePage from "./components/HomePage";
 import ChooseBarber from "./components/barbers/ChooseBarber";
 import Settings from "./components/account/Account";
@@ -13,7 +13,7 @@ import BarberProtectedRoute from "../src/utils/BarberProtectedRoute";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <AuthProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -27,7 +27,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </AuthProvider>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
