@@ -20,6 +20,9 @@ export const AuthProvider = ({ children }) => {
       const fName = getCookie("fName");
       const lName = getCookie("lName");
       const email = getCookie("email");
+      const workWeekends = getCookie("workWeekends");
+      const openingHour = getCookie("openingHour");
+      const closingHour = getCookie("closingHour");
 
       if (token && role) {
         setUser({
@@ -28,13 +31,16 @@ export const AuthProvider = ({ children }) => {
           _id: _id,
           fName: fName,
           lName: lName,
-          email: email
+          email: email,
+          workWeekends: workWeekends,
+          openingHour: openingHour,
+          closingHour: closingHour
         });
       }
       setLoading(false);
     }, []);
   
-    const loginUser = (role, token, _id, fName, lName, email) => {
+    const loginUser = (role, token, _id, fName, lName, email, workWeekends, openingHour, closingHour) => {
         logoutUser()
       // Set the token and role in cookies instead of state
       setCookie("accessToken", token, { path: "/" });
@@ -43,6 +49,9 @@ export const AuthProvider = ({ children }) => {
       setCookie("fName", fName, { path: "/" });
       setCookie("lName", lName, { path: "/" });
       setCookie("email", email, { path: "/" });
+      setCookie("workWeekends", workWeekends, { path: "/"});
+      setCookie("openingHour", openingHour, { path: "/"});
+      setCookie("closingHour", closingHour, { path: "/"});
   
       setUser({
         loggedIn: true,
@@ -50,7 +59,10 @@ export const AuthProvider = ({ children }) => {
         _id: _id,
         fName: fName,
         lName: lName,
-        email: email
+        email: email,
+        workWeekends: workWeekends,
+        openingHour: openingHour,
+        closingHour: closingHour
       });
       setLoading(false);
     };
@@ -63,6 +75,9 @@ export const AuthProvider = ({ children }) => {
       deleteCookie("fName");
       deleteCookie("lName");
       deleteCookie("email");
+      deleteCookie("workWeekends");
+      deleteCookie("openingHour");
+      deleteCookie("closingHour");
   
       // Update the user state to indicate that the user is logged out
       setUser({
@@ -71,7 +86,10 @@ export const AuthProvider = ({ children }) => {
         _id: "",
         fName: "",
         lName: "",
-        email: ""
+        email: "",
+        workWeekends: "",
+        openingHour: "",
+        closingHour: ""
       });
     };
 

@@ -33,9 +33,9 @@ export const Login = () => {
         })
         .then(function(response) {
             console.log(response);
-            const { _id, fName, lName, email, role, accessToken } = response.data;
+            const { _id, fName, lName, email, role, accessToken, workWeekends, openingHour, closingHour } = response.data;
             console.log(accessToken);
-            loginUser(role, accessToken, _id, fName, lName, email);
+            loginUser(role, accessToken, _id, fName, lName, email, workWeekends, openingHour, closingHour);
             setLoading(false);
             window.location.reload();
         })
@@ -59,11 +59,13 @@ export const Login = () => {
         <h1 className='text-4xl mb-5'>Login</h1>
       <form className="bg-white shadow-md rounded-md p-6" onSubmit={handleSubmit}>
         <label htmlFor="email" className="block font-medium mb-2">Email</label>
-        <input type="text" name="email" id="email" className="w-full p-2 border rounded-md mb-4" onChange={handleChange} />
+        <input type="text" name="email" id="email" className="w-full p-2 border rounded-md mb-4" onChange={handleChange} required />
 
         <label htmlFor="password" className="block font-medium mb-2">Password</label>
-        <input type="password" name="password" id="password" className="w-full p-2 border rounded-md mb-4" onChange={handleChange} />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Login</button>
+        <input type="password" name="password" id="password" className="w-full p-2 border rounded-md mb-4" onChange={handleChange} required />
+        <div className='flex justify-end'>
+            <button type="submit" className="border border-black text-black p-2 rounded-md hover:bg-black hover:text-white transition-all duration-200 ease-in-out">Login</button>
+        </div>
       </form>
     </div>
   );
