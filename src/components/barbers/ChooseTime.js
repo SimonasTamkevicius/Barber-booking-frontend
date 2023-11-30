@@ -7,18 +7,26 @@ import { FiSettings } from "react-icons/fi"
 
 // Function to calculate and return an array of dates for a week
 const getWeekDates = (currentDate, includeWeekends = false) => {
-    const startDate = new Date(currentDate);
-  
-    const numDays = includeWeekends ? 7 : 5;
-  
-    const dates = [];
-    for (let i = 0; i < numDays - 1; i++) {
-      const date = new Date(startDate);
-      date.setDate(startDate.getDate() + i);
-      dates.push(date);
+  const startDate = new Date(currentDate);
+  const dates = [];
+  let dayIndex = startDate.getDay();
+
+  // Iterate to get the next 7 days (including the current day)
+  for (let i = 0; i < 7; i++) {
+    // Skip weekends if includeWeekends is false
+    while (!includeWeekends && (dayIndex === 0 || dayIndex === 6)) {
+      startDate.setDate(startDate.getDate() + 1);
+      dayIndex = startDate.getDay();
     }
-  
-    return dates;
+
+    const date = new Date(startDate);
+    dates.push(date);
+
+    startDate.setDate(startDate.getDate() + 1);
+    dayIndex = startDate.getDay();
+  }
+
+  return dates;
 };
 
 const getHours = (opening, closing) => {
@@ -41,7 +49,7 @@ const ChooseTime = () => {
 
     const [date, setDate] = useState(currentDate);
 
-    let allWeekDates = getWeekDates(date, barberData.workWeekends === "yes" ? true : false);
+    let allWeekDates = getWeekDates(date, barberData.workWeekends === "yes");
     const allWorkHours = getHours(barberData.openingHour, barberData.closingHour);
 
     const formatDates = (dates) => {
@@ -76,9 +84,9 @@ const ChooseTime = () => {
       const date = selectedDate.split(" ");
       const YMDate = [date[1], " ", date[3]];
       setSelectedYMDate(YMDate);
-      allWeekDates = getWeekDates(selectedDate, barberData.workWeekends === "yes" ? true : false);
+      const includeWeekends = barberData.workWeekends === "yes" ? true : false;
+      allWeekDates = getWeekDates(selectedDate, includeWeekends);
     };
-    
 
     const shortFormDate = (dateString) => {
       const dateParts = dateString.split(', ');
